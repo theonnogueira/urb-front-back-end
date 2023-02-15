@@ -1,0 +1,151 @@
+<div class="container-fluid">
+  <div class="row bg-success d-flex align-items-center">
+    <div class="col-md-6">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 text-success text-center">
+          <h1
+            class="fs-30"
+            style="font-family: 'Times New Roman', Times, serif"
+          >
+            Seja bem vindo usuário
+          </h1>
+          <hr />
+          <h5
+            class="fs-18"
+            style="font-family: 'Times New Roman', Times, serif"
+          >
+            Urbana transportes
+          </h5>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center mt-3">
+        <div class="col-md-6 text-center">
+          <a href="#cartoes" class="btn btn-outline-success">Novo cartão</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 d-flex justify-content-center">
+      <img
+        src="../../assets/cartoes-vem-recife-removebg-preview.png"
+        alt="Imagem de fundo"
+        width="400px"
+        height="345px"
+      />
+    </div>
+  </div>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<h2 class="text-center">
+  Para cadastrar um cartão, preencha os campos abaixo:
+</h2>
+
+<div id="cartoes">
+  <form action="/action_page.php">
+    <label for="fname">Número do cartão</label>
+    <input
+      [(ngModel)]="cartao.numeroCartao"
+      type="text"
+      id="fnumber"
+      name="numerocartao"
+      placeholder="Digite aqui"
+    />
+
+    <label for="country">Status do cartão</label>
+    <select [(ngModel)]="cartao.status" id="status" name="status">
+      <option selected>Escolher</option>
+      <option value="ativo">Ativo</option>
+      <option value="inativo">Inativo</option>
+    </select>
+
+    <label for="country">Tipo do cartão</label>
+    <select [(ngModel)]="cartao.tipoCartao" id="tipo" name="tipo">
+      <option selected>Escolher</option>
+      <option value="comum">Comum</option>
+      <option value="estudante">Estudante</option>
+      <option value="trabalhador">Trabalhador</option>
+    </select>
+
+    <div class="form-group">
+      <label for="usuario"
+        >Escolha um usuário ou
+        <a routerLink="/usuario">Cadastre um novo</a>:</label
+      >
+      <select
+        name="usuario"
+        id="usuario"
+        class="form-control"
+        [(ngModel)]="idUsuario"
+        (change)="findByIdUsuario()"
+      >
+        <option *ngFor="let item of listaUsuarios" value="{{ item.id }}">
+          {{ item.apelido }}
+        </option>
+      </select>
+    </div>
+    <button type="button" class="btn btn-success" (click)="publicar()">
+      Submeter
+    </button>
+  </form>
+</div>
+<br />
+<ul
+  class="nav nav-tabs d-flex justify-content-center"
+  id="myTab"
+  role="tablist"
+>
+  <li class="nav-item">
+    <a
+      class="nav-link active"
+      id="todosCartoes-tab"
+      data-toggle="tab"
+      href="#todosCartoes"
+      role="tab"
+      aria-controls="todosCartoes"
+      aria-selected="true"
+      >Cartões cadastrados</a
+    >
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div
+    class="tab-pane fade show active"
+    id="todosCartoes"
+    role="tabpanel"
+    aria-labelledby="todosCartoes-tab"
+  >
+    <div class="card-columns">
+      <div class="card" *ngFor="let item of listaCartao">
+        <div class="card-body">
+          <h2 class="card-title">
+            Número do seu cartão: {{ item.numeroCartao }}
+          </h2>
+          <h2 class="card-title">Tipo de cartão: {{ item.tipoCartao }}</h2>
+          <h2 class="card-text">Status: {{ item.status }}</h2>
+          <h2 class="card-text">Usuário: {{ item.usuario.apelido }}</h2>
+
+          <a
+            [routerLink]="['/cartao-edit', item.id]"
+            class="text-info m-3"
+            href=""
+            >Editar</a
+          >
+          <a
+            [routerLink]="['/cartao-delet', item.id]"
+            class="text-danger m-3"
+            href=""
+            >Apagar</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
